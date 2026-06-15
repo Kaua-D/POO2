@@ -84,7 +84,7 @@ class Tabuleiro:
                 if c.tem_bomba:
                     c.revelada = True
 
-    def desenhar(self, tela, offset_x=0):
+    def desenhar(self, tela, offset_x=0, offset_y=None):
         for linha in self.matriz:
             for celula in linha:
-                celula.desenhar(tela, offset_x)
+                celula.desenhar(tela, offset_x, offset_y)

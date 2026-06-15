@@ -10,9 +10,12 @@ class Celula:
         self.marcada = False
         self.vizinhos_com_bomba = 0
 
-    def desenhar(self, tela, offset_x=0):
+    def desenhar(self, tela, offset_x=0, offset_y=None):
+        if offset_y is None:
+            offset_y = constants.ALTURA_MENU
+
         x = (self.coluna * constants.TAMANHO_CELULA) + offset_x
-        y = (self.linha * constants.TAMANHO_CELULA) + constants.ALTURA_MENU
+        y = (self.linha * constants.TAMANHO_CELULA) + offset_y
         rect = pygame.Rect(x, y, constants.TAMANHO_CELULA, constants.TAMANHO_CELULA)
 
         if not self.revelada:

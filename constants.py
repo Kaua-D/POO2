@@ -2,7 +2,7 @@ import pygame
 
 pygame.font.init()
 
-TAMANHO_CELULA = 40
+TAMANHO_CELULA = 30
 ESPACO_MEIO = 40
 ALTURA_MENU = 140
 
