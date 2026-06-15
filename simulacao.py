@@ -3,22 +3,22 @@ import constants
 from tabuleiro import Tabuleiro
 from jogador import JogadorLogico, JogadorAleatorio
 
-def rodar_simulacao(quantidade):
+def rodar_simulacao(quantidade, linhas=15, colunas=15, num_bombas=38):
     vitorias_logico = 0
     vitorias_random = 0
     empates = 0
-    pontos_logico_total = 0 
+    pontos_logico_total = 0
     pontos_random_total = 0
-    
 
-    print(f"Iniciando simulação de {quantidade} partidas...")
+
+    print(f"Iniciando simulação de {quantidade} partidas ({linhas}x{colunas}, {num_bombas} bombas)...")
     print("Por favor, aguarde o processamento...\n")
 
     tempo_inicio = time.time()
 
     for i in range(quantidade):
-        tab_logico = Tabuleiro(gerar_bombas=True)
-        tab_random = Tabuleiro(gerar_bombas=False)
+        tab_logico = Tabuleiro(linhas, colunas, num_bombas, gerar_bombas=True)
+        tab_random = Tabuleiro(linhas, colunas, num_bombas, gerar_bombas=False)
         tab_random.clonar_de(tab_logico)
 
         logico = JogadorLogico(tab_logico)
@@ -69,7 +69,7 @@ def rodar_simulacao(quantidade):
     print(f" RESULTADO FINAL DE {quantidade} PARTIDAS (Vence quem faz mais pontos)")
     print("="*50)
     print(f"Tempo de execução total: {tempo_total:.2f} segundos\n")
-    
+
     print(f"--- IA LÓGICA ---")
     print(f"Vitórias em Combate: {vitorias_logico} ({(vitorias_logico/quantidade)*100:.2f}%)")
     print(f"Total de Pontos (Casas Seguras): {pontos_logico_total}")
@@ -86,5 +86,3 @@ def rodar_simulacao(quantidade):
 
 if __name__ == "__main__":
     rodar_simulacao(1000)
-
-
