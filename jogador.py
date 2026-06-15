@@ -10,19 +10,19 @@ class JogadorLogico:
         para_verificar = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
         for dl, dc in para_verificar:
             nl, nc = linha + dl, coluna + dc
-            if 0 <= nl < constants.LINHAS and 0 <= nc < constants.COLUNAS:
+            if 0 <= nl < self.tabuleiro.linhas and 0 <= nc < self.tabuleiro.colunas:
                 vizinhos.append(self.tabuleiro.matriz[nl][nc])
         return vizinhos
 
     def realizar_jogada(self):
         celulas_reveladas = sum(1 for l in self.tabuleiro.matriz for c in l if c.revelada)
         if celulas_reveladas == 0:
-            return ("CLICAR", constants.LINHAS // 2, constants.COLUNAS // 2)
+            return ("CLICAR", self.tabuleiro.linhas // 2, self.tabuleiro.colunas // 2)
 
         fez_algo = False
-        
-        for l in range(constants.LINHAS):
-            for c in range(constants.COLUNAS):
+
+        for l in range(self.tabuleiro.linhas):
+            for c in range(self.tabuleiro.colunas):
                 celula = self.tabuleiro.matriz[l][c]
                 if celula.revelada and not celula.tem_bomba and celula.vizinhos_com_bomba > 0:
                     vizinhos = self.obter_vizinhos(l, c)
@@ -34,8 +34,8 @@ class JogadorLogico:
                             oc.marcada = True
                             fez_algo = True
 
-        for l in range(constants.LINHAS):
-            for c in range(constants.COLUNAS):
+        for l in range(self.tabuleiro.linhas):
+            for c in range(self.tabuleiro.colunas):
                 celula = self.tabuleiro.matriz[l][c]
                 if celula.revelada and not celula.tem_bomba and celula.vizinhos_com_bomba > 0:
                     vizinhos = self.obter_vizinhos(l, c)
@@ -48,7 +48,7 @@ class JogadorLogico:
         if fez_algo:
             return ("MARCOU", -1, -1)
 
-        opcoes = [(l, c) for l in range(constants.LINHAS) for c in range(constants.COLUNAS) if not self.tabuleiro.matriz[l][c].revelada and not self.tabuleiro.matriz[l][c].marcada]
+        opcoes = [(l, c) for l in range(self.tabuleiro.linhas) for c in range(self.tabuleiro.colunas) if not self.tabuleiro.matriz[l][c].revelada and not self.tabuleiro.matriz[l][c].marcada]
         if opcoes:
             l, c = random.choice(opcoes)
             return ("CLICAR", l, c)
@@ -60,12 +60,12 @@ class JogadorAleatorio:
 
     def realizar_jogada(self):
         opcoes = []
-        for l in range(constants.LINHAS):
-            for c in range(constants.COLUNAS):
+        for l in range(self.tabuleiro.linhas):
+            for c in range(self.tabuleiro.colunas):
                 celula = self.tabuleiro.matriz[l][c]
                 if not celula.revelada and not celula.marcada:
                     opcoes.append((l, c))
-        
+
         if opcoes:
             l, c = random.choice(opcoes)
             return ("CLICAR", l, c)
