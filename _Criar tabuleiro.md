@@ -24,5 +24,9 @@ Criar varias simulação sem intertefasse , ou acelerar interfasse
 
 Criar varios mapas para teste de para testar, denços, espaçado e mediano
 
-adiacionar novos mapas com quantidade variavel de bombas e tamanhos
+Adiacionar novos mapas com quantidade variavel de bombas e tamanhos
+
+Persistir resultados em classes
+
+Ligar / desligat visual
 

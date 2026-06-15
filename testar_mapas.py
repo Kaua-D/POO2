@@ -1,7 +1,7 @@
 from simulacao import rodar_simulacao
 
 def testar_todos_os_mapas():
-    quantidade = 100
+    quantidade = 1000
 
     # 15x15, 10 bombas
     print("\n\n>>> INICIANDO TESTE: MAPA ESPAÇADO <<<")
