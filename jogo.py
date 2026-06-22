@@ -24,9 +24,12 @@ class Jogo:
         self.botao_espacado = Botao(340, 10, 100, 40, "Espaçado")
         self.botao_denso = Botao(450, 10, 100, 40, "Denso")
 
+        self.botao_visual = Botao(560, 10, 140, 40, "Ver / Ocultar")
+
         largura_botao = 160
         pos_x_botao = self.largura_tela - largura_botao - 10
         self.botao_reiniciar = Botao(pos_x_botao, 10, largura_botao, 40, "Nova Batalha")
+        self.visual_ligado = True
 
         self.reiniciar()
 
@@ -62,6 +65,8 @@ class Jogo:
                 self.definir_dificuldade(15, 15, 10)
             elif self.botao_denso.foi_clicado(pos):
                 self.definir_dificuldade(15, 15, 70)
+            elif self.botao_visual.foi_clicado(pos):
+                self.visual_ligado = not self.visual_ligado
 
     '''Modificar para que rodar sem interface'''
     def desenhar_interface(self):
@@ -72,6 +77,7 @@ class Jogo:
         self.botao_dificil.desenhar(self.tela)
         self.botao_espacado.desenhar(self.tela)
         self.botao_denso.desenhar(self.tela)
+        self.botao_visual.desenhar(self.tela)
 
         centro_l = self.largura_tela // 4
         centro_r = (self.largura_tela // 4) * 3
@@ -143,27 +149,23 @@ class Jogo:
                         elif self.tab_random.verificar_vitoria():
                             self.estado_random = "VENCEU"
 
-            self.desenhar_interface()
+            if self.visual_ligado:
+                self.desenhar_interface()
 
-            # Centro de cada metade
-            centro_l = self.largura_tela // 4
-            centro_r = (self.largura_tela // 4) * 3
+                centro_l = self.largura_tela // 4
+                centro_r = (self.largura_tela // 4) * 3
 
-            # Tamanho real do tabuleiro atual
-            largura_tab = self.colunas * constants.TAMANHO_CELULA
-            altura_tab = self.linhas * constants.TAMANHO_CELULA
+                largura_tab = self.colunas * constants.TAMANHO_CELULA
+                altura_tab = self.linhas * constants.TAMANHO_CELULA
 
-            # Offset dinâmico para centralizar o tabuleiro na área disponível
-            offset_x_l = centro_l - (largura_tab // 2)
-            offset_x_r = centro_r - (largura_tab // 2)
+                offset_x_l = centro_l - (largura_tab // 2)
+                offset_x_r = centro_r - (largura_tab // 2)
 
-            # Subtrai ALTURA_MENU porque ele já é somado no cálculo do Y na célula,
-            # ou simplesmente passamos o offset_y absoluto
-            area_restante_y = self.altura_tela - constants.ALTURA_MENU
-            offset_y = constants.ALTURA_MENU + (area_restante_y - altura_tab) // 2
+                area_restante_y = self.altura_tela - constants.ALTURA_MENU
+                offset_y = constants.ALTURA_MENU + (area_restante_y - altura_tab) // 2
 
-            self.tab_logico.desenhar(self.tela, offset_x=offset_x_l, offset_y=offset_y)
-            self.tab_random.desenhar(self.tela, offset_x=offset_x_r, offset_y=offset_y)
+                self.tab_logico.desenhar(self.tela, offset_x=offset_x_l, offset_y=offset_y)
+                self.tab_random.desenhar(self.tela, offset_x=offset_x_r, offset_y=offset_y)
 
-            pygame.display.flip()
-            self.relogio.tick(30)
+                pygame.display.flip()
+                self.relogio.tick(30)

@@ -10,7 +10,6 @@ def rodar_simulacao(quantidade, linhas=15, colunas=15, num_bombas=38):
     pontos_logico_total = 0
     pontos_random_total = 0
 
-
     print(f"Iniciando simulação de {quantidade} partidas ({linhas}x{colunas}, {num_bombas} bombas)...")
     print("Por favor, aguarde o processamento...\n")
 
@@ -83,6 +82,14 @@ def rodar_simulacao(quantidade, linhas=15, colunas=15, num_bombas=38):
     print(f"--- EMPATES ---")
     print(f"Quantidade: {empates} ({(empates/quantidade)*100:.2f}%)")
     print("="*50)
+
+    return {
+        "vitorias_logico": vitorias_logico,
+        "vitorias_random": vitorias_random,
+        "empates": empates,
+        "pontos_logico": pontos_logico_total,
+        "pontos_random": pontos_random_total,
+    }
 
 if __name__ == "__main__":
     rodar_simulacao(1000)

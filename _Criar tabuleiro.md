@@ -28,5 +28,6 @@ Adiacionar novos mapas com quantidade variavel de bombas e tamanhos
 
 Persistir resultados em classes
 
-Ligar / desligat visual
+Ligar / desligat - para ativar ou desatvar o versão visivel do jogo, em momentos que se quera ver algumas jogadas ou apenas deixar ela carregando no backend
 
+também sera necessario: tranformar o testar_mapas.py em uma classe, para pader fazer ele rodar automaticamente e colocar um moda espera e outro rodar. Adicionar um banco de dados para criar uma tabela com os resultado das jogas rodados pelo testar_mapas.py.
