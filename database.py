@@ -16,5 +16,5 @@ class ResultadoSimulacao(db.Entity):
     quantidade_partidas = Required(int)
     data_hora = Required(datetime, default=datetime.now)
 
-db.bind(provider='sqlite', filename='resultado.sqlite', create_db=True)
+db.bind(provider='sqlite', filename='resultados.sqlite', create_db=True)
 db.generate_mapping(create_tables=True)

@@ -68,7 +68,6 @@ class Jogo:
             elif self.botao_visual.foi_clicado(pos):
                 self.visual_ligado = not self.visual_ligado
 
-    '''Modificar para que rodar sem interface'''
     def desenhar_interface(self):
         self.tela.fill(constants.COR_FUNDO)
         self.botao_reiniciar.desenhar(self.tela)
