@@ -4,7 +4,7 @@ from tabuleiro import Tabuleiro
 from botao import Botao
 from jogador import JogadorLogico, JogadorAleatorio
 from database import db, ResultadoSimulacao
-from pony.orm import db_session
+from pony.orm import db_session, select
 import time
 
 class PartidaSimulacao:
@@ -153,15 +153,56 @@ class TestadorDeMapasVisual:
                 self.partidas_concluidas += 1
                 break
 
+    @db_session
+    def desenhar_tela_resultados(self):
+        txt_titulo = constants.FONTE_VENCEDOR.render("BATERIA DE TESTES FINALIZADA! RESULTADOS:", True, constants.COR_VITORIA)
+        self.tela.blit(txt_titulo, txt_titulo.get_rect(center=(self.largura_tela // 2, 50)))
+
+        cabecalho = ["ID", "Mapa", "Tamanho", "Bombas", "Vit. Lógico", "Vit. Random", "Pts Lógico", "Pts Random"]
+
+        y_pos = 120
+        x_colunas = [20, 80, 250, 420, 560, 720, 880, 1040]
+
+        # Desenhar Cabeçalho
+        for i, texto in enumerate(cabecalho):
+            txt_cab = constants.FONTE_TITULOS.render(texto, True, constants.COR_LOGICO)
+            self.tela.blit(txt_cab, (x_colunas[i], y_pos))
+
+        y_pos += 40
+
+        # Buscar dados no banco
+        resultados = select(r for r in ResultadoSimulacao).order_by(ResultadoSimulacao.id)[:]
+
+        for r in resultados:
+            if y_pos > self.altura_tela - 50:
+                break # Para nao sair da tela, caso tenham muitos (no momento sao 5)
+
+            linha_str = [
+                str(r.id),
+                r.tipo_mapa,
+                f"{r.linhas}x{r.colunas}",
+                str(r.num_bombas),
+                str(r.vitorias_logico),
+                str(r.vitorias_random),
+                str(r.pontos_logico),
+                str(r.pontos_random)
+            ]
+
+            for i, texto in enumerate(linha_str):
+                txt_linha = constants.FONTE_PLACARES.render(texto, True, constants.COR_TEXTO)
+                self.tela.blit(txt_linha, (x_colunas[i], y_pos))
+
+            y_pos += 30
+
     def desenhar_painel_progresso(self):
         self.tela.fill(constants.COR_FUNDO)
-        self.btn_visual.desenhar(self.tela)
-        self.btn_pausa.desenhar(self.tela)
 
         if self.mapa_index >= len(self.mapas_config):
-            txt = constants.FONTE_VENCEDOR.render("BATERIA DE TESTES FINALIZADA!", True, constants.COR_VITORIA)
-            self.tela.blit(txt, txt.get_rect(center=(self.largura_tela // 2, self.altura_tela // 2)))
+            self.desenhar_tela_resultados()
             return
+
+        self.btn_visual.desenhar(self.tela)
+        self.btn_pausa.desenhar(self.tela)
 
         conf = self.mapas_config[self.mapa_index]
 
