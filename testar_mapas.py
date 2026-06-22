@@ -85,7 +85,6 @@ class TestadorDeMapasVisual:
         # Controles Visuais
         self.visual_ligado = False
         self.pausado = False
-        self.processamento_rapido_taxa = 1000 # quantas partidas resolver por frame se visual_ligado == False
 
         # Botoes
         self.btn_visual = Botao(10, 10, 150, 40, "Ver: OFF")
@@ -239,9 +238,10 @@ class TestadorDeMapasVisual:
                                 else:
                                     self.iniciar_proxima_partida()
                     else:
-                        # Backend rápido: roda múltiplas partidas em um único frame
-                        # E atualiza a tela como se fosse "porcentagem"
-                        for _ in range(self.processamento_rapido_taxa):
+                        # Backend rápido baseado em limite de tempo por frame (ex: 30ms max)
+                        # Garante que a interface continue responsiva aos botões (FPS fluido)
+                        tempo_inicio = time.perf_counter()
+                        while (time.perf_counter() - tempo_inicio) < 0.03: # 30ms
                             if self.partidas_concluidas >= self.quantidade_total:
                                 self.avancar_mapa()
                                 break
