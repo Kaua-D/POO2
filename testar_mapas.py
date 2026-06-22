@@ -131,7 +131,6 @@ class TestadorDeMapasVisual:
             self.iniciar_proxima_partida()
 
     def processar_partida_ate_o_fim(self):
-        # Roda a partida atual instantaneamente até acabar
         while True:
             acabou = self.partida_atual.jogar_turno()
             if acabou:
@@ -208,7 +207,6 @@ class TestadorDeMapasVisual:
         txt_progresso = constants.FONTE_TITULOS.render(progresso, True, constants.COR_TEXTO)
         self.tela.blit(txt_progresso, (10, 110))
 
-        # Barra de Progresso
         largura_barra = 400
         altura_barra = 20
         x_barra = 10
@@ -247,9 +245,8 @@ class TestadorDeMapasVisual:
             if self.mapa_index < len(self.mapas_config):
                 if not self.pausado:
                     if self.visual_ligado:
-                        # Roda devagar o turno visualizando a IA
                         timer += 1
-                        if timer >= 5: # Um pequeno delay para conseguir enxergar o jogo
+                        if timer >= 5:
                             timer = 0
                             acabou = self.partida_atual.jogar_turno()
                             if acabou:
